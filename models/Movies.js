@@ -17,6 +17,11 @@ const MovieSchema = new mongoose.Schema({
         type: String,
         enum: ["action", "comedy", "drama", "horror", "animation", "romance", "fantasy"]
     },
+    // rating: {
+    //     type: Number,
+    //     min: 0,
+    //     max: 10
+    // },
     year: {
         type: Number,
         min: 1888,

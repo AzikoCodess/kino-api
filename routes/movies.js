@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { getAllMovies, getMovieById, deleteMovieById, updateMovieById, createMovie } = require("../controllers/moviesController")
+const { getAllMovies, getMovieById, deleteMovieById, updateMovieById, createMovie, getMoviesByGenre } = require("../controllers/moviesController")
 const authMiddleware = require("../middleware/authMiddleware")
 
 /**
  * @swagger
- * /movies:
+ * /movies/all:
  *   get:
  *     summary: Barcha kinolarni olish
  *     responses:
@@ -14,11 +14,11 @@ const authMiddleware = require("../middleware/authMiddleware")
  *       500:
  *         description: Server xatosi
  */
-router.get("/", getAllMovies)
+router.get("/all", getAllMovies)
 
 /**
  * @swagger
- * /movies/{id}:
+ * /movies/id/{id}:
  *   get:
  *     summary: ID bo'yicha kino olish
  *     parameters:
@@ -35,11 +35,11 @@ router.get("/", getAllMovies)
  *       500:
  *         description: Server xatosi
  */
-router.get("/:id", getMovieById)
+router.get("/id/:id", getMovieById)
 
 /**
  * @swagger
- * /movies:
+ * /movies/add:
  *   post:
  *     summary: Yangi kino qo'shish (admin)
  *     security:
@@ -67,11 +67,11 @@ router.get("/:id", getMovieById)
  *       500:
  *         description: Server xatosi
  */
-router.post("/", authMiddleware, createMovie)
+router.post("/add", authMiddleware, createMovie)
 
 /**
  * @swagger
- * /movies/{id}:
+ * /movies/id/{id}:
  *   put:
  *     summary: Kino o'zgartirish (admin)
  *     security:
@@ -107,11 +107,11 @@ router.post("/", authMiddleware, createMovie)
  *       500:
  *         description: Server xatosi
  */
-router.put("/:id", authMiddleware, updateMovieById)
+router.put("/id/:id", authMiddleware, updateMovieById)
 
 /**
  * @swagger
- * /movies/{id}:
+ * /movies/id/{id}:
  *   delete:
  *     summary: Kino o'chirish (admin)
  *     security:
@@ -132,6 +132,28 @@ router.put("/:id", authMiddleware, updateMovieById)
  *       500:
  *         description: Server xatosi
  */
-router.delete("/:id", authMiddleware, deleteMovieById)
+router.delete("/id/:id", authMiddleware, deleteMovieById)
+
+/**
+ * @swagger
+ * /movies/genre/{genre}:
+ *   get:
+ *     summary: Janr bo'yicha kino olish
+ *     parameters:
+ *       - in: path
+ *         name: genre
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: ["action", "comedy", "drama", "horror", "animation", "romance", "fantasy"]
+ *     responses:
+ *       200:
+ *         description: Kino topildi
+ *       404:
+ *         description: Kino topilmadi
+ *       500:
+ *         description: Server xatosi
+ */
+router.get("/genre/:genre", getMoviesByGenre)
 
 module.exports = router

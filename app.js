@@ -17,7 +17,7 @@ const movieRoutes = require("./routes/movies");
 const reviewRoutes = require("./routes/reviews");
 app.use("/auth", authRoutes);
 app.use("/movies", movieRoutes);
-// app.use("/reviews", reviewRoutes);
+app.use("/reviews", reviewRoutes);
 
 const swaggerOptions = {
     definition: {

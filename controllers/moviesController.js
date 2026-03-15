@@ -44,7 +44,7 @@ const updateMovieById = async (req, res) => {
         }
         const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true })
         if (!movie) {
-            return res.status(403).json({ error: "Kino topilmadi!" })
+            return res.status(404).json({ error: "Kino topilmadi!" })
         }
         res.status(200).json({ message: "Kino o'zgartirildi!" })
     } catch (error) {
@@ -53,7 +53,6 @@ const updateMovieById = async (req, res) => {
 }
 
 const createMovie = async (req, res) => {
-    console.log(req.user.role)
     try {
         if (req.user.role !== "admin") {
             return res.status(403).json({ error: "Ruxsat yo'q! Faqat admin qo'sha oladi." })
@@ -68,4 +67,13 @@ const createMovie = async (req, res) => {
     }
 }
 
-module.exports = { getAllMovies, getMovieById, deleteMovieById, updateMovieById, createMovie }
+const getMoviesByGenre = async (req, res) => {
+    try {
+        const genre = await Movie.find({ genre: req.params.genre })
+        res.status(200).json(genre);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+module.exports = { getAllMovies, getMovieById, deleteMovieById, updateMovieById, createMovie, getMoviesByGenre }
