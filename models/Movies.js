@@ -17,12 +17,10 @@ const MovieSchema = new mongoose.Schema({
         type: String,
         enum: ["action", "comedy", "drama", "horror", "animation", "romance", "fantasy"]
     },
-    
     year: {
         type: Number,
         min: 1888,
-        max: new Date().getFullYear(),
-        default: new Date().getFullYear()
+        max: new Date().getFullYear()
     }
 }, { timestamps: true });
 

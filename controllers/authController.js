@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/Users");
+const User = require("../models/User");
 
 const register = async (req, res) => {
     try {
@@ -30,7 +30,7 @@ const login = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(401).json({ message: "Parol noto'g'ri!" });
         }
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
         res.status(200).json({ message: "Muvaffaqiyatli tizimga kirdingiz!", token });
     } catch (error) {
         res.status(500).json({ error: error.message });
